@@ -29,6 +29,8 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@fontsource/bungee-shade": "^5.0.17",
+		"@fontsource/nokora": "^5.0.17",
 		"@fontsource/roboto": "^5.0.8"
 	}
 }
