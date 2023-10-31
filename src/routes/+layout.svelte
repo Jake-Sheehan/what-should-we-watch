@@ -1,20 +1,25 @@
-<script>
+<script lang="ts">
 	import '@fontsource/roboto';
 	import '@fontsource/bungee-shade';
 	import '@fontsource/nokora';
 	import '../styles.css';
 	import menu from '$lib/icons/menu-48px.svg';
 	import tmdb_logo from '$lib/logos/tmdb-logo.svg';
+
+	let footer_height: number;
+	let header_height: number;
 </script>
 
-<header>
+<header bind:offsetHeight={header_height}>
 	<h1 class="logo">What Should We Watch?</h1>
 	<img src={menu} alt="menu" />
 </header>
 
-<slot />
+<main style="margin-bottom: {footer_height + 12}px; margin-top: {header_height + 12}px">
+	<slot />
+</main>
 
-<footer>
+<footer bind:offsetHeight={footer_height}>
 	<div class="copyright">
 		<p>&copy; 2023 Jake Sheehan</p>
 	</div>
@@ -26,11 +31,22 @@
 
 <style>
 	header {
+		background: linear-gradient(to bottom, hsl(254, 100%, 2%) 90%, hsla(254, 100%, 2%, 0));
 		display: flex;
 		flex-flow: row wrap;
 		justify-content: space-between;
 		align-items: center;
 		padding: 2rem 2rem;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 999;
+	}
+
+	main {
+		width: 100%;
+		height: 100%;
 	}
 
 	.logo {
@@ -46,7 +62,12 @@
 		flex-flow: row wrap;
 		justify-content: space-between;
 		align-items: center;
-		padding: 2rem 1rem;
+		padding: 1rem 1rem;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background: linear-gradient(to top, hsl(254, 100%, 2%) 90%, hsla(254, 100%, 2%, 0));
 	}
 
 	footer p {
@@ -76,11 +97,11 @@
 		}
 
 		header {
-			padding: 2rem 0;
+			padding: 2rem 5rem;
 		}
 
 		footer {
-			padding: 4rem 0;
+			padding: 2rem 5rem;
 		}
 	}
 </style>

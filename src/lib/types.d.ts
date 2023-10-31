@@ -70,7 +70,7 @@ export interface MovieListResult {
 export interface MovieDetails {
 	adult: boolean;
 	backdrop_path: string;
-	belongs_to_collection: boolean | null;
+	belongs_to_collection: string | null;
 	budget: number;
 	genres: Genre[];
 	homepage: string;
