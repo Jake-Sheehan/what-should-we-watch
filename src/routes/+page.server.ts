@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 import * as api from '$lib/api.server';
-import type { MovieDetails, MovieList, MovieListResult } from '$lib/types';
+import type { GenreList, MovieDetails, MovieList, MovieListResult } from '$lib/types';
 
 export const load: PageServerLoad = async ({ fetch, locals }) => {
 	const [popular, top_rated] = await Promise.all([
@@ -12,10 +12,6 @@ export const load: PageServerLoad = async ({ fetch, locals }) => {
 			language: 'en-US',
 			page: '1'
 		}) as Promise<MovieList>
-		// api.get(fetch, 'discover/movie', {
-		// 	with_genres: '27',
-		// 	page: '1'
-		// }) as Promise<MovieList>
 	]);
 
 	const hero = (await api.get(fetch, `movie/${popular.results[0].id}`, {
@@ -28,7 +24,15 @@ export const load: PageServerLoad = async ({ fetch, locals }) => {
 	// generate genre categories
 
 	// grabs genres from locals
-	const genres_list = locals.genres;
+	let genres_list = locals.genres;
+
+	// on navigation layout doesn't reload and we lose locals
+	if (!genres_list) {
+		const response = (await api.get(fetch, 'genre/movie/list', {
+			language: 'en'
+		})) as GenreList;
+		genres_list = response.genres;
+	}
 
 	// gets all genres from api and returns an array
 	const genre_categories_response = await Promise.all(
