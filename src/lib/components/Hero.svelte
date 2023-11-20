@@ -28,7 +28,6 @@
 	figure {
 		width: 100%;
 		position: relative;
-		margin-bottom: 2rem;
 	}
 	img {
 		width: 100%;

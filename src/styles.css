@@ -1,6 +1,7 @@
 /* GLOBAL VARIABLES */
 :root {
 	--font-color: hsla(360, 100%, 100%, 1);
+	--highlight-color: hsl(254, 100%, 60%);
 }
 
 /* CSS RESET */

@@ -1,21 +1,64 @@
 <script lang="ts">
 	import Carousel from './../lib/components/Carousel.svelte';
-	import Hero from '$lib/components/Hero.svelte';
+	import type { GenreCategory, MovieDetails, MovieDetailsList, MovieList } from '$lib/types';
+	import CarouselLoading from '$lib/components/CarouselLoading.svelte';
+	import HeroCarousel from '$lib/components/HeroCarousel.svelte';
 
-	export let data;
+	async function getFeaturedMovies() {
+		const res = await fetch('/api/movies/featured');
+		const data = (await res.json()) as MovieDetailsList;
+		return data;
+	}
 
-	$: hero = data.hero;
-	$: popular = data.popular.results;
-	$: top_rated = data.top_rated.results;
-	$: genres = data.genres;
+	const featuredPromise = getFeaturedMovies();
+
+	async function getPopluarMovies() {
+		const res = await fetch('/api/movies/popular');
+		const data = (await res.json()) as MovieList;
+		return data;
+	}
+
+	const popularPromise = getPopluarMovies();
+
+	async function getTopRatedMovies() {
+		const res = await fetch('/api/movies/top-rated');
+		const data = (await res.json()) as MovieList;
+		return data;
+	}
+
+	const topRatedPromise = getTopRatedMovies();
+
+	async function getGenres() {
+		const res = await fetch('/api/movies/categories');
+		const data = (await res.json()) as GenreCategory[];
+		return data;
+	}
+
+	const genresPromise = getGenres();
 </script>
 
-<Hero movie={hero} />
+{#await featuredPromise}
+	<p>...loading</p>
+{:then data}
+	<HeroCarousel movies={data.results} />
+{/await}
 
-<Carousel movies={popular} category="Popular" />
+{#await popularPromise}
+	<CarouselLoading />
+{:then data}
+	<Carousel movies={data.results} category="Popular" />
+{/await}
 
-<Carousel movies={top_rated} category="Top Rated" />
+{#await topRatedPromise}
+	<CarouselLoading />
+{:then data}
+	<Carousel movies={data.results} category="Top Rated" />
+{/await}
 
-{#each genres as genre}
-	<Carousel movies={genre.movies} category={genre.name} />
-{/each}
+{#await genresPromise}
+	<CarouselLoading />
+{:then data}
+	{#each data as genre}
+		<Carousel movies={genre.movies} category={genre.name} />
+	{/each}
+{/await}

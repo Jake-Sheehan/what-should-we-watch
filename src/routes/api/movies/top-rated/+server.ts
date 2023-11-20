@@ -2,7 +2,7 @@ import { BEARER_TOKEN } from '$env/static/private';
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ setHeaders }) {
-	const url = 'https://api.themoviedb.org/3/movie/popular';
+	const url = 'https://api.themoviedb.org/3/movie/top_rated';
 	const options = {
 		method: 'GET',
 		headers: {

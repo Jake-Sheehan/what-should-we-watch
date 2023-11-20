@@ -9,6 +9,11 @@ export interface GenreList {
 	genres: Genre[];
 }
 
+export interface GenreCategory {
+	name: string;
+	movies: MovieListResult[];
+}
+
 interface Image {
 	aspect_ratio: number;
 	file_path: string;
@@ -94,4 +99,9 @@ export interface MovieDetails {
 	video: boolean;
 	vote_average: number;
 	vote_count: boolean;
+}
+
+export interface MovieDetailsList {
+	results: MovieDetails[];
+	total_results: number;
 }

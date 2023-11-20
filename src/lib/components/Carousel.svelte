@@ -117,7 +117,7 @@
 	}
 
 	figure {
-		width: 100%;
+		/* width: 100%; */
 		height: 100%;
 	}
 
@@ -126,6 +126,7 @@
 		height: auto;
 		border-radius: 10px;
 		border: 2px solid hsl(255, 100%, 25%);
+		aspect-ratio: 2/3;
 	}
 
 	@media only screen and (min-width: 1280px) {
